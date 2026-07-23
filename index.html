@@ -179,6 +179,9 @@ const WARMUP = [
   ["Glute bridge, ilman kuormaa","15"],
   ["Kissa-kameli","10"],
   ["Lonkankoukistajan avaus","30 s / puoli"],
+  ["Kuminauhan ulkokierto (olkapää)","2 × 12 / puoli"],
+  ["Olkapään kierrot, molemmat suunnat","10 + 10"],
+  ["Punnerrus seinää tai pöytää vasten","8"],
   ["Kahvakuulaswing 8 kg, kevyt","15"],
 ];
 
@@ -187,10 +190,11 @@ const PROG = {
     nimi: "Lantiosarana-painotteinen",
     liikkeet: [
       {n:"Romanian deadlift, 2 × 16 kg", k:"32 kg", v:["3 × 10","4 × 10","4 × 11","4 × 12"]},
-      {n:"Hip thrust, 20 kg lantiolla",  k:"20 kg", v:["3 × 12","3 × 14","4 × 12","4 × 14"]},
+      {n:"Yhden jalan hip thrust, jalka korotuksella", k:"keho → 8 kg", v:["3 × 10/p","3 × 12/p","4 × 10/p","4 × 12/p"]},
+      {n:"Kahvakuula deadlift leveällä haaralla (sumo)", k:"20 kg", v:["3 × 12","3 × 14","4 × 12","4 × 14"]},
       {n:"Yhden käden floor press",      k:"12 kg", v:["3 × 10/p","3 × 12/p","4 × 10/p","4 × 12/p"]},
       {n:"Kahvakuula row, tuettu",       k:"16 kg", v:["3 × 10/p","3 × 12/p","4 × 10/p","4 × 12/p"]},
-      {n:"Suitcase carry / staattinen pito", k:"20 kg", v:["3 × 30 s/p","3 × 40 s/p","3 × 45 s/p","4 × 40 s/p"]},
+      {n:"Suitcase carry — YKSI kuula, toinen käsi vapaana", k:"20 kg", v:["3 × 30 s/p","3 × 40 s/p","3 × 45 s/p","4 × 40 s/p"]},
     ]
   },
   B2: {
@@ -198,6 +202,7 @@ const PROG = {
     liikkeet: [
       {n:"Yhden jalan RDL (takajalka tukena)", k:"12 kg", v:["3 × 8/p","3 × 10/p","4 × 8/p","4 × 10/p"]},
       {n:"Goblet-hyvää huomenta",              k:"16 kg", v:["3 × 12","3 × 14","4 × 12","4 × 14"]},
+      {n:"Seisova lonkan ojennus, kuminauha",  k:"kuminauha", v:["3 × 15/p","3 × 18/p","4 × 15/p","4 × 18/p"]},
       {n:"Punnerrus (täysi tai korotukselta)", k:"keho",  v:["3 × max−2","3 × max−1","4 × max−2","4 × max−1"]},
       {n:"Renegade row / row 2 × 16 kg",       k:"32 kg", v:["3 × 8/p","3 × 10/p","4 × 8/p","4 × 10/p"]},
       {n:"Glute bridge march + dead bug",      k:"keho",  v:["2 × 12/p","3 × 12/p","3 × 14/p","3 × 16/p"]},
@@ -325,7 +330,7 @@ function App(){
               : <button className="clockbtn" onClick={()=>setRun(r=>!r)}>{run?"Tauko":"Aloita"}</button>}
           </div>
 
-          <div className="sect">Lämmittely · 5 min</div>
+          <div className="sect">Lämmittely · 6 min</div>
           <div className="warm">
             {WARMUP.map(([a,b],i)=>(
               <div key={i}><span>{a}</span><span>{b}</span></div>
