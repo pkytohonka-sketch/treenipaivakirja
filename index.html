@@ -174,15 +174,12 @@ body{margin:0}
 const {useState,useEffect,useRef} = React;
 
 const WARMUP = [
-  ["Kuminauha side steps","2 × 15"],
-  ["Monster walk","2 × 10"],
-  ["Glute bridge, ilman kuormaa","15"],
-  ["Kissa-kameli","10"],
-  ["Lonkankoukistajan avaus","30 s / puoli"],
+  ["Soutulaite tai crosstrainer","4 min"],
   ["Kuminauhan ulkokierto (olkapää)","2 × 12 / puoli"],
-  ["Olkapään kierrot, molemmat suunnat","10 + 10"],
-  ["Punnerrus seinää tai pöytää vasten","8"],
-  ["Kahvakuulaswing 8 kg, kevyt","15"],
+  ["Kuminauha side steps","2 × 15"],
+  ["Glute bridge, ilman kuormaa","15"],
+  ["Lonkankoukistajan avaus","30 s / puoli"],
+  ["Ensimmäinen sarja kevennettynä","joka liikkeessä"],
 ];
 
 const PROG = {
@@ -207,6 +204,28 @@ const PROG = {
       {n:"Kahvakuula row, raskas 2 × 16 kg tai 1 × 20 kg", k:"32 / 20 kg", v:["3 × 10","3 × 12","4 × 10","4 × 12"]},
       {n:"Dead bug (jäähdyttely, ei sarja)",   k:"keho",  v:["2 × 12/p","2 × 12/p","2 × 12/p","2 × 12/p"]},
     ]
+  },
+  A: {
+    nimi: "Sali · kokovartalo, raskas",
+    liikkeet: [
+      {n:"Romanian deadlift, levytanko", k:"40 kg →", v:["4 × 8","4 × 8","4 × 6","5 × 6"]},
+      {n:"Hip thrust, levytanko penkkiä vasten", k:"40 kg →", v:["4 × 10","4 × 10","4 × 8","4 × 8"]},
+      {n:"Pystypunnerrus, käsipainot istuen", k:"2 × 6 kg", v:["4 × 10","4 × 10","4 × 8","4 × 8"]},
+      {n:"Kelkka, työntö + veto", k:"20–30 kg", v:["4 × 20 m","5 × 20 m","5 × 25 m","6 × 25 m"]},
+      {n:"Taljasoutu, istuen", k:"30–35 kg", v:["4 × 12","4 × 12","4 × 10","4 × 10"]},
+      {n:"Taljan lonkkaveto (pull-through)", k:"20–25 kg", v:["3 × 12","3 × 14","4 × 12","4 × 12"]},
+    ]
+  },
+  B: {
+    nimi: "Sali · kokovartalo, yksipuolinen",
+    liikkeet: [
+      {n:"Yhden jalan RDL, käsipainot (kantapääkoroke)", k:"2 × 10 kg", v:["3 × 10/p","3 × 10/p","4 × 8/p","4 × 8/p"]},
+      {n:"Taljan pakaraveto (cable kickback)", k:"10–15 kg", v:["3 × 15/p","3 × 15/p","4 × 15/p","4 × 15/p"]},
+      {n:"Penkkipunnerrus, käsipainot", k:"2 × 10 kg", v:["4 × 10","4 × 10","4 × 8","4 × 8"]},
+      {n:"Taljasoutu / yhden käden taljaveto", k:"20 kg/käsi", v:["4 × 12","4 × 12","4 × 10","4 × 10"]},
+      {n:"45° selän/lonkan ojennus", k:"keho → 5–10 kg", v:["3 × 12","3 × 12","4 × 10","4 × 10"]},
+      {n:"Farmer's walk / suitcase carry", k:"2 × 16–20 kg", v:["3 × 40 m","3 × 40 m","4 × 40 m","4 × 40 m"]},
+    ]
   }
 };
 
@@ -226,7 +245,7 @@ function beep(){
 
 function App(){
   const [vk,setVk]     = useState(1);
-  const [tr,setTr]     = useState("B1");
+  const [tr,setTr]     = useState("A");
   const [log,setLog]   = useState({});
   const [open,setOpen] = useState(null);
   const [hist,setHist] = useState([]);
@@ -295,7 +314,7 @@ function App(){
     <div className="wrap">
       <div className="masthead">
         <h1>Treeni&shy;päivä&shy;kirja</h1>
-        <div className="sub">Kahvakuula · 4 viikon blokki · B1 / B2</div>
+        <div className="sub">Sali A / B · koti B1 / B2 · 4 viikon blokki</div>
       </div>
 
       {view==="treeni" ? (
@@ -311,7 +330,7 @@ function App(){
 
           <div className="picklab">Treeni</div>
           <div className="pickrow">
-            {["B1","B2"].map(t=>(
+            {["A","B","B1","B2"].map(t=>(
               <button key={t} className={"pick"+(tr===t?" on":"")} onClick={()=>{setTr(t);setLog({});setOpen(null)}}>
                 {t}
               </button>
@@ -330,7 +349,7 @@ function App(){
               : <button className="clockbtn" onClick={()=>setRun(r=>!r)}>{run?"Tauko":"Aloita"}</button>}
           </div>
 
-          <div className="sect">Lämmittely · 6 min</div>
+          <div className="sect">Lämmittely · 7 min</div>
           <div className="warm">
             {WARMUP.map(([a,b],i)=>(
               <div key={i}><span>{a}</span><span>{b}</span></div>
