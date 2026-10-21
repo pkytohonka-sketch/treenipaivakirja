@@ -276,9 +276,61 @@ function App(){
   const [rest,setRest]   = useState(0);
   const [restOn,setRestOn] = useState(null);
 
+  const [loaded,setLoaded] = useState(false);
+
+  // Lataa historia + mahdollinen kesken jäänyt treeni
   useEffect(()=>{
     try{ const h = localStorage.getItem("tpk_hist"); if(h) setHist(JSON.parse(h)); }catch(e){}
+    try{
+      const d = localStorage.getItem("tpk_draft");
+      if(d){
+        const o = JSON.parse(d);
+        // kesken jäänyt treeni palautetaan vain samalta päivältä
+        if(o && o.pvm === new Date().toDateString()){
+          if(o.vk) setVk(o.vk);
+          if(o.tr) setTr(o.tr);
+          if(o.log) setLog(o.log);
+          if(typeof o.sess === "number") setSess(o.sess);
+        }else{
+          localStorage.removeItem("tpk_draft");
+        }
+      }
+    }catch(e){}
+    setLoaded(true);
   },[]);
+
+  // Tallenna kesken oleva treeni heti joka muutoksella
+  useEffect(()=>{
+    if(!loaded) return;
+    try{
+      if(Object.keys(log).length === 0){
+        localStorage.removeItem("tpk_draft");
+      }else{
+        localStorage.setItem("tpk_draft", JSON.stringify({
+          pvm: new Date().toDateString(), vk, tr, log, sess
+        }));
+      }
+    }catch(e){}
+  },[log,vk,tr,sess,loaded]);
+
+  // Varmista tallennus myös kun sivu menee taustalle
+  useEffect(()=>{
+    const flush = ()=>{
+      try{
+        if(Object.keys(log).length > 0){
+          localStorage.setItem("tpk_draft", JSON.stringify({
+            pvm: new Date().toDateString(), vk, tr, log, sess
+          }));
+        }
+      }catch(e){}
+    };
+    document.addEventListener("visibilitychange", flush);
+    window.addEventListener("pagehide", flush);
+    return ()=>{
+      document.removeEventListener("visibilitychange", flush);
+      window.removeEventListener("pagehide", flush);
+    };
+  },[log,vk,tr,sess]);
 
   useEffect(()=>{
     if(!run) return;
@@ -311,6 +363,7 @@ function App(){
     const nh = [entry,...hist];
     setHist(nh);
     try{ localStorage.setItem("tpk_hist", JSON.stringify(nh)); }catch(e){}
+    try{ localStorage.removeItem("tpk_draft"); }catch(e){}
     setLog({}); setSess(0); setRun(false); setOpen(null);
     setView("historia");
   };
