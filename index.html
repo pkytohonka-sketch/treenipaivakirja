@@ -226,6 +226,26 @@ const PROG = {
       {n:"45° selän/lonkan ojennus", k:"keho → 5–10 kg", v:["3 × 12","3 × 12","4 × 10","4 × 10"]},
       {n:"Farmer's walk / suitcase carry", k:"2 × 16–20 kg", v:["3 × 40 m","3 × 40 m","4 × 40 m","4 × 40 m"]},
     ]
+  },
+  A3: {
+    nimi: "Blokki 3 · A — bilateraalinen, raskas",
+    liikkeet: [
+      {n:"Maastaveto, levytanko", k:"60 kg", v:["4 × 8","4 × 10","4 × 8","4 × 10"]},
+      {n:"Hip thrust levytangolla MAASSA", k:"40 kg", v:["4 × 10","4 × 12","4 × 10","4 × 12"]},
+      {n:"Vinopenkki, levytanko", k:"25 kg", v:["4 × 8","4 × 10","4 × 8","4 × 10"]},
+      {n:"Kahvakuula kulmasoutu", k:"16 kg", v:["3 × 10/p","3 × 12/p","3 × 10/p","3 × 12/p"]},
+      {n:"Hauiskääntö + ojentajaliike, supersarja", k:"2 × 7 kg / 15 kg", v:["3 × 12","3 × 12","3 × 12","3 × 12"]},
+    ]
+  },
+  B3: {
+    nimi: "Blokki 3 · B — yksipuolinen + jalkaprässi",
+    liikkeet: [
+      {n:"Romanian deadlift, levytanko", k:"55 kg", v:["4 × 8","4 × 10","4 × 8","4 × 10"]},
+      {n:"Jalkaprässi, RAJATTU liikerata", k:"40 kg (testi)", v:["3 × 10","3 × 12","4 × 10","4 × 12"]},
+      {n:"Yhden jalan lantionnosto, jalka korotuksella", k:"16 kg", v:["3 × 10/p","3 × 12/p","3 × 10/p","3 × 12/p"]},
+      {n:"Pystypunnerrus, levytanko seisten", k:"20 kg (tanko)", v:["3 × 8","3 × 10","3 × 8","3 × 10"]},
+      {n:"45° selän/lonkan ojennus", k:"5 kg", v:["3 × 12","3 × 12","4 × 12","4 × 12"]},
+    ]
   }
 };
 
@@ -245,7 +265,7 @@ function beep(){
 
 function App(){
   const [vk,setVk]     = useState(1);
-  const [tr,setTr]     = useState("A");
+  const [tr,setTr]     = useState("A3");
   const [log,setLog]   = useState({});
   const [open,setOpen] = useState(null);
   const [hist,setHist] = useState([]);
@@ -314,7 +334,7 @@ function App(){
     <div className="wrap">
       <div className="masthead">
         <h1>Treeni&shy;päivä&shy;kirja</h1>
-        <div className="sub">Sali A / B · koti B1 / B2 · 4 viikon blokki</div>
+        <div className="sub">Blokki 3 · A3 / B3 — vanhat: A / B / B1 / B2</div>
       </div>
 
       {view==="treeni" ? (
@@ -330,7 +350,7 @@ function App(){
 
           <div className="picklab">Treeni</div>
           <div className="pickrow">
-            {["A","B","B1","B2"].map(t=>(
+            {["A3","B3","A","B","B1","B2"].map(t=>(
               <button key={t} className={"pick"+(tr===t?" on":"")} onClick={()=>{setTr(t);setLog({});setOpen(null)}}>
                 {t}
               </button>
